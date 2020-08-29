@@ -1,0 +1,14 @@
+.col-latency {
+    width: 110px;
+    height: 41px;
+}
+
+.loading {
+    background-image: url(../spinner.svg) !important;
+    background-repeat: no-repeat;
+    background-size: 110px 41px;
+}
+
+tr {
+    cursor: pointer;
+}
