@@ -1,7 +1,7 @@
 function ping(host, callback) {
     var timeStart = new Date().getTime();
     var xhr = new XMLHttpRequest();
-    xhr.open("GET", "http://" + host + ":" + 80, true);
+    xhr.open("GET", location.protocol + "//" + host + ":" + 80, true);
     xhr.onreadystatechange = function () {
         if (xhr.readyState == 4) {
             callback(new Date().getTime() - timeStart);
@@ -63,7 +63,7 @@ function buildTable() {
                 $("#tb-ping-results").bootstrapTable("updateCell", {
                     index: element[0].dataset.index,
                     field: "latency",
-                    value: timeElapsed / 2,
+                    value: timeElapsed,
                 });
             })
         },
