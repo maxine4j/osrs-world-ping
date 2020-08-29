@@ -1,7 +1,7 @@
 function ping(host, callback) {
     var timeStart = new Date().getTime();
     var xhr = new XMLHttpRequest();
-    xhr.open("GET", location.protocol + "//" + host + ":" + 80, true);
+    xhr.open("GET", location.protocol + "//" + host, true);
     xhr.onreadystatechange = function () {
         if (xhr.readyState == 4) {
             callback(new Date().getTime() - timeStart);
