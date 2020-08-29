@@ -1,8 +1,3 @@
-/*
-Written by Tim Ings <tim@tim-ings.com>
-Copyright 2018 All rights reserved
- */
-
 var worldData = [
     // ----------------------------------------- Col 1 ----------------------------------------- 
     {

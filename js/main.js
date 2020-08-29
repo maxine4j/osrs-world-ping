@@ -1,8 +1,3 @@
-/*
-Written by Tim Ings <tim@tim-ings.com>
-Copyright 2018 All rights reserved
- */
-
 function ping(host, callback) {
     var timeStart = new Date().getTime();
     var xhr = new XMLHttpRequest();
