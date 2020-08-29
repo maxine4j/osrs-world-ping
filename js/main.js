@@ -1,31 +1,12 @@
-function ping(host, callback) {
-    var timeStart = new Date().getTime();
-    var xhr = new XMLHttpRequest();
-    xhr.open("GET", location.protocol + "//" + host, true);
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState == 4) {
-            callback(new Date().getTime() - timeStart);
-        }
-    };
-    try {
-        xhr.send(null);
-    } catch (exception) {
-    }
-}
+const ping = (host) => {
+    return new Promise(async (resolve) => {
+        const timeStart = new Date().getTime();
+        await fetch(`${location.protocol}//${host}`, { mode: 'no-cors' });
+        resolve(new Date().getTime() - timeStart);
+    });
+};
 
-function buildTable() {
-    var tableData = []
-    for (var i = 0; i < worldData.length; i++) {
-        var world = worldData[i];
-        var row = {
-            "world": world["id"],
-            "type": world["type"],
-            "members": world["members"],
-            "location": world["location"],
-            "latency": "",
-        };
-        tableData.push(row);
-    }
+const buildTable = () =>
     $("#tb-ping-results").bootstrapTable({
         search: true,
         striped: true,
@@ -55,20 +36,24 @@ function buildTable() {
             title: "Latency",
             class: "col-latency",
         }],
-        data: tableData,
-        onClickRow: function (row, element, field) {
-            var worldID = row["world"];
-            var worldUrl = "oldschool" + (parseInt(worldID) - 300) + ".runescape.com";
-            ping(worldUrl, function (timeElapsed) {
-                $("#tb-ping-results").bootstrapTable("updateCell", {
-                    index: element[0].dataset.index,
-                    field: "latency",
-                    value: timeElapsed,
-                });
-            })
+        data: worldData.map((w) => ({
+            world: w["id"],
+            type: w["type"],
+            members: w["members"],
+            location: w["location"],
+            latency: "",
+        })),
+        onClickRow: async (row, element, field) => {
+            const worldID = row["world"];
+            const worldUrl = "oldschool" + (parseInt(worldID) - 300) + ".runescape.com";
+            const time = await ping(worldUrl);
+            $("#tb-ping-results").bootstrapTable("updateCell", {
+                index: element[0].dataset.index,
+                field: "latency",
+                value: time,
+            });
         },
     });
-}
 
 $(document).ready(function () {
     buildTable();
